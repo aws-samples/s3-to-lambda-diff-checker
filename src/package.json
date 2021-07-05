@@ -1,0 +1,18 @@
+{
+  "name": "diff-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "diff": "^5.0.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.937.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "James Beswick",
+  "license": "MIT-0"
+}

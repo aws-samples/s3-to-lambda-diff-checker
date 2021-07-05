@@ -1,0 +1,21 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.1",
+            "eventSource": "aws:s3",
+            "awsRegion": "us-east-1",
+            "eventTime": "2021-07-01T12:51:27.423Z",
+            "s3": {
+                "bucket": {
+                    "name": "s3-differ",
+                    "arn": "arn:aws:s3:::s3-differ"
+                },
+                "object": {
+                    "key": "test.txt",
+                    "size": 71,
+                    "versionId": "qiXKDwQaKWaXvmYZr.FaUjmc4g11bdkI"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: S3 diff checker and version lifecycler - jbesw@.
+
+Parameters:
+  BucketName:
+    Type: String
+
+Resources:
+  ## S3 bucket
+  SourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled      
+
+  ## Lambda function
+  S3ProcessorFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: src/
+      Handler: app.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Environment:
+        Variables:
+          KEEP_VERSIONS: 3
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref BucketName      
+        - Statement:
+          - Sid: VersionsPermission
+            Effect: Allow
+            Action:
+            - s3:ListBucketVersions
+            Resource: !Sub "arn:${AWS::Partition}:s3:::${BucketName}" 
+        - Statement:
+          - Sid: DeletePermission
+            Effect: Allow
+            Action:
+            - s3:DeleteObject
+            - s3:DeleteObjectVersion
+            Resource: !Sub "arn:${AWS::Partition}:s3:::${BucketName}/*"             
+      Events:
+        FileUpload:
+          Type: S3
+          Properties:
+            Bucket: !Ref SourceBucket
+            Events: s3:ObjectCreated:*
+            Filter: 
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: '.txt'     
+
+Outputs: 
+  BucketARN:
+    Description: Source bucket ARN
+    Value: !Sub "arn:${AWS::Partition}:s3:::${BucketName}" 
