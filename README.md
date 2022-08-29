@@ -34,6 +34,7 @@ To learn more about how this application works, see the article on the AWS Compu
     ```
 1. From the command line, use AWS SAM to deploy the AWS resources for the pattern as specified in the template.yml file:
     ```
+    sam build
     sam deploy --guided
     ```
 1. During the prompts:
