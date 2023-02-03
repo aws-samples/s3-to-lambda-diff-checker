@@ -14,8 +14,8 @@ const compareS3 = async (oldVersion, newVersion) => {
     console.log ({oldVersion, newVersion})
 
     // Get original text from objects 
-    const oldObject = await s3.getObject({ Bucket: oldVersion.BucketName, Key: oldVersion.Key }).promise()
-    const newObject = await s3.getObject({ Bucket: newVersion.BucketName, Key: newVersion.Key }).promise()
+    const oldObject = await s3.getObject({ Bucket: oldVersion.BucketName, Key: oldVersion.Key, VersionId: oldVersion.VersionId }).promise()
+    const newObject = await s3.getObject({ Bucket: newVersion.BucketName, Key: newVersion.Key, VersionId: newVersion.VersionId }).promise()
 
     // Convert buffers to strings
     const oldFile = oldObject.Body.toString()
